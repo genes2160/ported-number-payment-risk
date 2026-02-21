@@ -1,0 +1,255 @@
+:root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --accent: #3b82f6;
+    --ok: #22c55e;
+    --bad: #ef4444;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui;
+    background: var(--bg);
+    color: white
+}
+
+header {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: #020617;
+    position: sticky;
+    top: 0
+}
+
+.tab {
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #1e293b;
+    cursor: pointer
+}
+
+.tab.active {
+    background: var(--accent)
+}
+
+.view {
+    display: none;
+    padding: 18px
+}
+
+.view.active {
+    display: block
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 18px;
+}
+
+.wallets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .05);
+}
+
+.balance {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 8px 0
+}
+
+.green {
+    color: var(--ok)
+}
+
+.red {
+    color: var(--bad)
+}
+
+input {
+    width: 95%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: none
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: none
+}
+
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    cursor: pointer
+}
+
+.log {
+    background: #020617;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    height: 120px;
+    overflow: auto;
+    font-size: 13px
+}
+
+.modebar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px
+}
+
+.mode {
+    padding: 8px 14px;
+    background: #1e293b;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+.mode.active {
+    background: var(--ok)
+}
+
+/* SLIDES */
+.slidebox {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+    padding: 40px 20px;
+    background: #020617;
+    border-radius: 16px;
+    font-size: 22px;
+    line-height: 1.6;
+    min-height: 220px;
+    transition: .6s;
+}
+
+.slideemoji {
+    font-size: 50px;
+    margin-bottom: 15px;
+    display: block
+}
+
+.caption {
+    opacity: .7;
+    font-size: 14px;
+    margin-top: 10px
+}
+
+.label {
+    padding-top: 20px;
+}
+
+@media(max-width:800px) {
+    .layout {
+        grid-template-columns: 1fr
+    }
+}
+
+
+.slideWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    cursor: pointer;
+    padding: 10px;
+    opacity: .6;
+}
+
+.arrow:hover .arrow.left {
+    left: 10px
+}
+
+.arrow.right {
+    right: 10px
+}
+
+.policyQuestions {
+    margin-top: 30px;
+    background: #020617;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.pollGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.pollCard {
+    background: #1e293b;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+}
+
+.pollCard h3 {
+    min-height: 60px;
+}
+
+.pollCard button {
+    margin-top: 10px;
+}
+
+@media(max-width:900px) {
+    .pollGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.results h3 {
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.barRow {
+    margin: 8px 0;
+}
+
+.bar {
+    width: 100%;
+    height: 20px;
+    background: #020617;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: #22c55e;
+    text-align: right;
+    padding-right: 6px;
+    font-size: 12px;
+    line-height: 20px;
+    transition: .4s;
+}

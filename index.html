@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghost Wallet Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body>
+
+    <header>
+        <div class="tab active" onclick="showTab('flow',this)">🔄 Flow</div>
+        <div class="tab" onclick="showTab('risk',this)">⚠️ Risks</div>
+        <div class="tab" onclick="showTab('fix',this)">🛠 Fix Simulator</div>
+        <div class="tab" onclick="showTab('survey',this)">🗳 Survey</div>
+    </header>
+
+    <!-- FLOW -->
+
+    <div id="flow" class="view active">
+        <div class="layout">
+
+            <div class="card">
+                <h3>🏦 Send Money</h3>
+                Balance: <b id="bankBal">GHC 5000.00</b>
+                <br />
+                <br />
+                <label>Network</label>
+                <select id="network">
+                    <option value="mtn">MTN</option>
+                    <option value="telecash">Telecash</option>
+                </select>
+                <br />
+                <br />
+
+                <label>Phone</label> <input id="number" value="0241234567" max="10" />
+                <br />
+                <label>Amount</label> <input id="amount" value="200" />
+
+                <button onclick="sendBroken()">Confirm Transfer</button>
+
+                <div class="log" id="flowLog"></div>
+            </div>
+
+            <div class="wallets">
+                <div class="card">
+                    <h3>📞 Telecash Wallet</h3>
+                    <div class="balance green" id="teleBal">0</div>
+                    <div class="log" id="teleLog"></div>
+                </div>
+
+                <div class="card">
+                    <h3>👻 MTN Ghost Wallet</h3>
+                    <div class="balance red" id="mtnBal">0</div>
+                    <div class="log" id="mtnLog"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RISKS -->
+    <div id="risk" class="view">
+        <h1>⚠️ Impact Scenarios</h1>
+
+
+        <div class="slideWrapper">
+            <div class="arrow left" onclick="prevSlide()">❮</div>
+
+            <div class="slidebox" id="slide">
+                <span class="slideemoji">📤</span>
+                You send money confidently<br>
+                <b>"Payment successful"</b>
+                <div class="caption">Everything looks correct</div>
+            </div>
+
+            <div class="arrow right" onclick="nextSlide()">❯</div>
+        </div>
+
+        <div class="policyQuestions">
+            <h3>❓ Unanswered Questions</h3>
+            <ul>
+                <li>What happens if the wallet owner passes away?</li>
+                <li>Does the money remain indefinitely in the ghost wallet?</li>
+                <li>Is there a recovery policy for next of kin?</li>
+                <li>Are users explicitly warned when porting numbers?</li>
+                <li>Is this buried inside Terms & Conditions?</li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <!-- FIX -->
+
+    <div id="fix" class="view">
+        <div class="modebar">
+            <div class="mode active" onclick="setMode('broken',this)">Broken</div>
+            <div class="mode" onclick="setMode('reject',this)">Reject</div>
+            <div class="mode" onclick="setMode('reroute',this)">Reroute</div>
+        </div>
+
+        <div class="layout">
+
+            <div class="card">
+                <h3>🏦 Transfer Simulation</h3>
+                Balance: <b id="f_bankBal">GHC 5000.00</b>
+                <br />
+                <br />
+                <label>Network</label>
+                <select id="fnetwork">
+                    <option value="mtn">MTN</option>
+                    <option value="telecash">Telecash</option>
+                </select>
+                <br />
+                <label>Phone</label>
+                <input id="f_number" value="0241234567" max="10" /><br />
+                <label>Amount</label>
+                <input id="f_amount" value="200" />
+                <button onclick="runFix()">Send</button>
+                <div class="log" id="fixLog"></div>
+            </div>
+
+            <div class="wallets">
+                <div class="card">
+                    <h3>📞 Telecash</h3>
+                    <div class="balance green" id="f_teleBal">0</div>
+                    <div class="log" id="FteleLog"></div>
+                </div>
+                <div class="card">
+                    <h3>👻 MTN</h3>
+                    <div class="balance red" id="f_mtnBal">0</div>
+                    <div class="log" id="fmtnLog"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="survey" class="view">
+        <h1>🗳 Community Feedback</h1>
+
+
+        <div class="pollGrid">
+
+            <div class="pollCard">
+                <h3>Did this article help you understand the issue?</h3>
+                <button onclick="vote('useful')">👍 Useful</button>
+                <button onclick="vote('confusing')">🤔 Still confusing</button>
+            </div>
+
+            <div class="pollCard">
+                <h3>Have you experienced missing money after porting?</h3>
+                <button onclick="vote('affected_yes')">⚠️ Yes</button>
+                <button onclick="vote('affected_no')">🙂 No</button>
+            </div>
+
+            <div class="pollCard">
+                <h3>Should next-of-kin be notified of ghost wallets?</h3>
+                <button onclick="vote('notify_yes')">📨 Yes</button>
+                <button onclick="vote('notify_no')">❌ No</button>
+            </div>
+
+        </div>
+
+        <div class="log" id="surveyLog"></div>
+
+
+    </div>
+
+    <script src="app.js" type="text/javascript"></script>
+
+</body>
+
+</html>
