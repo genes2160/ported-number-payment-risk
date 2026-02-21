@@ -1,5 +1,4 @@
-<img width="1361" height="574" alt="image" src="https://github.com/user-attachments/assets/4dee7a25-f4ef-4cbb-a010-ba45688fdc47" /><img width="1359" height="567" alt="image" src="https://github.com/user-attachments/assets/124850fa-dcb3-469c-b4e6-270c563bff09" /># Ported Number Ghost Wallet 👻📱💸
-
+# Ported Number Ghost Wallet 👻📱💸
 A visual proof-of-concept showing how **one phone number can silently belong to two mobile money wallets after number portability.**
 
 > You send money → receiver never sees it → system says successful.
