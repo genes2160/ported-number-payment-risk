@@ -1,4 +1,4 @@
-# Ported Number Ghost Wallet 👻📱💸
+# Ported Number Payment Risk Ghost Wallet 👻📱💸
 A visual proof-of-concept showing how **one phone number can silently belong to two mobile money wallets after number portability.**
 
 > You send money → receiver never sees it → system says successful.
