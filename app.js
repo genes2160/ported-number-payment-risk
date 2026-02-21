@@ -148,34 +148,43 @@ async function vote(type) {
     }
 }
 
+function percent(a, b) {
+    const total = (a || 0) + (b || 0);
+    if (total === 0) return [0, 0];
+    return [Math.round(a / total * 100), Math.round(b / total * 100)];
+}
+
 async function renderSurveyResults(votes = {}) {
-
-    function percent(a, b) {
-        const total = (a || 0) + (b || 0);
-        if (total === 0) return [0, 0];
-        return [Math.round(a / total * 100), Math.round(b / total * 100)];
-    }
-
+    if (!votes.useful && !votes.confusing && !votes.affected_yes && !votes.affected_no && !votes.notify_yes && !votes.notify_no) return;
     const [usefulYes, usefulNo] = percent(votes.useful, votes.confusing);
     const [affYes, affNo] = percent(votes.affected_yes, votes.affected_no);
     const [notifyYes, notifyNo] = percent(votes.notify_yes, votes.notify_no);
 
     surveyLog.innerHTML = `
-                    < div class="results" >
+        <div class="results" >
+            <div class="pollGrid">
+                <div class="pollCard">
+                    <h3>Understanding</h3>
+                    ${bar("Useful 👍", usefulYes)}
+                    ${bar("Confusing 🤔", usefulNo)}
+                </div>
 
-                        <h3>Understanding</h3>
-            ${bar("Useful 👍", usefulYes)}
-            ${bar("Confusing 🤔", usefulNo)}
+                <div class="pollCard">
+                    <h3>Affected</h3>
+                    ${bar("Yes ⚠️", affYes)}
+                    ${bar("No 🙂", affNo)}
+                </div>
 
-                <h3>Affected</h3>
-            ${bar("Yes ⚠️", affYes)}
-            ${bar("No 🙂", affNo)}
+                <div class="pollCard">
+                    <h3>Next-of-Kin Notification</h3>
+                    ${bar("Notify 📨", notifyYes)}
+                    ${bar("Do not ❌", notifyNo)}
+                </div>
+            </div>
 
-                <h3>Next-of-Kin Notification</h3>
-            ${bar("Notify 📨", notifyYes)}
-            ${bar("Do not ❌", notifyNo)}
+        </div>
+    `;
 
-        </div > `;
 
 
 }
