@@ -2,6 +2,7 @@
 let bank = 5000, tele = 0, mtn = 0
 let fbank = 5000, ftele = 0, fmtn = 0
 let mode = "broken"
+let pendingAction = null;
 /* SLIDES */
 const slides = [
     ["📤", "You send money", "Everything looks normal"],
@@ -27,6 +28,35 @@ async function showTab(id, el) {
         renderSurveyResults(votes);
     }
 }
+
+function openConfirm(name, action) {
+    modalTitle.innerText = "Confirm Recipient";
+    modalMessage.innerText = `Account Name: ${name}`;
+    confirmBtn.classList.remove("hidden");
+    closeBtn.classList.add("hidden");
+
+    pendingAction = action;
+    confirmModal.classList.remove("hidden");
+}
+
+function openFailure(message) {
+    modalTitle.innerText = "Transaction Failed ❌";
+    modalMessage.innerText = message;
+
+    confirmBtn.classList.add("hidden");
+    closeBtn.classList.remove("hidden");
+
+    confirmModal.classList.remove("hidden");
+}
+
+confirmBtn.onclick = () => {
+    confirmModal.classList.add("hidden");
+    if (pendingAction) pendingAction();
+};
+
+closeBtn.onclick = () => {
+    confirmModal.classList.add("hidden");
+};
 
 function update() {
     bankBal.innerText = `GHC ${bank.toFixed(2)}`
@@ -55,13 +85,12 @@ function sendBroken() {
         return;
     }
 
-    // Deduct from bank
-    bank -= amount;
+    // STOP here and ask confirmation
+    openConfirm("Kwame Mensah", () => executeSendBroken(amount, selectedNetwork));
+}
+function executeSendBroken(amount, selectedNetwork) {
 
-    // --- CORE BUG ---
-    // Regardless of what user selects or actual ported network,
-    // routing table still sends to MTN ghost wallet
-    const routedNetwork = "mtn";
+    bank -= amount;
 
     if (selectedNetwork === "mtn") {
         mtn += amount;
@@ -73,12 +102,12 @@ function sendBroken() {
     }
 
     flowLog.innerHTML += `
-                <div>
-                Transfer successful ✅<br>
-                You selected: ${selectedNetwork.toUpperCase()}<br>
-                Actually delivered: ${selectedNetwork.toUpperCase()} 👻
-                </div>
-            `;
+        <div>
+        Transfer successful ✅<br>
+        You selected: ${selectedNetwork.toUpperCase()}<br>
+        Actually delivered: ${selectedNetwork.toUpperCase()} 👻
+        </div>
+    `;
 
     update();
 }
@@ -90,27 +119,31 @@ function setMode(m, el) {
 }
 
 function runFix() {
-    let portedNetwork = "TELECASH"
-    let f_amount = document.querySelector("#f_amount")?.value
-    let fnetwork = document.querySelector("#fnetwork")?.value
-    if (!f_amount) return;
-    if (!fnetwork) return;
-    f_amount = Number(f_amount)
-    if (fnetwork && fnetwork === 'telecash') {
-        fbank -= f_amount; ftele += f_amount; fixLog.innerHTML += `<div>${portedNetwork} received ✔</div>`
-    } else
-        if (mode === "broken") {
-            fbank -= f_amount; fmtn += f_amount; fixLog.innerHTML += "<div>Ghost wallet received</div>"
-        } else
-            if (mode === "reject") {
-                fixLog.innerHTML += `<div>Blocked: Number ported please choose ${portedNetwork} network ❌</div>`
-            } else
-                if (mode === "reroute") {
-                    fbank -= f_amount; ftele += f_amount; fixLog.innerHTML += `<div>${portedNetwork} received ✔</div>`
-                }
-    update()
-}
 
+    let amount = Number(document.querySelector("#f_amount")?.value);
+    let net = document.querySelector("#fnetwork")?.value;
+
+    if (!amount || !net) return;
+
+    openConfirm("Kwame Mensah", () => executeFix(amount, net));
+}
+function executeFix(f_amount, fnetwork) {
+
+    let portedNetwork = "TELECASH";
+
+    if (fnetwork === 'telecash') {
+        fbank -= f_amount; ftele += f_amount; fixLog.innerHTML += `<div>${portedNetwork} received ✔</div>`
+    } else if (mode === "broken") {
+        fbank -= f_amount; fmtn += f_amount; fixLog.innerHTML += "<div>Ghost wallet received</div>"
+    } else if (mode === "reject") {
+        fixLog.innerHTML += `<div>Blocked: Number ported please choose ${portedNetwork} network ❌</div>`
+        openFailure(`This number has been ported.\nPlease select ${portedNetwork} as the destination network.`);
+    } else if (mode === "reroute") {
+        fbank -= f_amount; ftele += f_amount; fixLog.innerHTML += `<div>${portedNetwork} received ✔</div>`
+    }
+
+    update();
+}
 
 function renderSlide() {
     const s = slides[slideIndex];
