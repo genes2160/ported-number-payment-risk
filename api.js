@@ -1,3 +1,13 @@
+
+function openprompt(title, message) {
+    modalTitle.innerText = title;
+    modalMessage.innerText = message;
+
+    confirmBtn.classList.add("hidden");
+    closeBtn.classList.remove("hidden");
+
+    confirmModal.classList.remove("hidden");
+}
 async function fetchVotes() {
     try {
         const res = await fetch("/api/votes");
@@ -17,6 +27,7 @@ async function sendVote(type) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ type })
         });
+        openprompt('You vote has been submitted', `Thank you for submitting you vote`)
 
     }
     catch (e) {

@@ -173,11 +173,12 @@ async function vote(type) {
     try {
         await sendVote(type)
         votes = await fetchVotes(); // refresh UI from server
+        renderSurveyResults(votes);
     } catch (error) {
         let votes = JSON.parse(localStorage.getItem("ghost_votes") || "{}");
         votes[type] = (votes[type] || 0) + 1;
         localStorage.setItem("ghost_votes", JSON.stringify(votes));
-        renderSurveyResults(data);
+        renderSurveyResults(votes);
     }
 }
 
